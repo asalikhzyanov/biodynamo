@@ -69,11 +69,7 @@ class NeighborNanoflannOp {
   ~NeighborNanoflannOp() {}
 
   template <typename TContainer>
-  void Compute(TContainer* cells, const char* filename = nullptr) const {
-    ofstream outfile;
-    if (filename != nullptr) {
-      outfile.open(filename, std::ofstream::out | std::ofstream::app);
-    }
+  void Compute(TContainer* cells) const {
 
     typedef NanoFlannAdapter<TContainer> Adapter;
     const Adapter nf_cells(*cells);  // The adaptor
@@ -86,21 +82,14 @@ class NeighborNanoflannOp {
     // three dimensions; max leafs: 10
     my_kd_tree_t index(3, nf_cells, KDTreeSingleIndexAdaptorParams(10));
 
-    std::chrono::steady_clock::time_point begin_build = std::chrono::steady_clock::now();
+    // std::chrono::steady_clock::time_point begin_build = std::chrono::steady_clock::now();
     index.buildIndex();
-    std::chrono::steady_clock::time_point end_build = std::chrono::steady_clock::now();
+    // std::chrono::steady_clock::time_point end_build = std::chrono::steady_clock::now();
 
-    if (print_terminal == 1) {
-      std::cout << "================[NanoFlann]==================" << std::endl;
-      std::cout << "KD-Tree build time   = " << std::chrono::duration_cast<std::chrono::milliseconds>(end_build - begin_build).count() << "ms\n";
-    }
-    if (filename != nullptr) {
-      outfile << cells->size() << ",";
-      outfile << std::chrono::duration_cast<std::chrono::microseconds>(end_build - begin_build).count() << ",";
-    }
+    // std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end_build - begin_build).count() << ",";
 
 // calc neighbors
-std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+// std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 int avg_num_neighbors = 0;
 #pragma omp parallel for
     for (size_t i = 0; i < cells->size(); i++) {
@@ -130,16 +119,9 @@ int avg_num_neighbors = 0;
       }
       (*cells)[i].SetNeighbors(neighbors);
     }
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    // std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-    if (print_terminal == 1) {
-      std::cout << "Neighbor search time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms\n";
-      // std::cout << "# of neighbors found = " << (avg_num_neighbors/(cells->size())) << std::endl;
-    }
-    if (filename != nullptr) {
-      outfile << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << ",";
-      outfile.close();
-    }
+    // std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << ",";
   }
 
  private:

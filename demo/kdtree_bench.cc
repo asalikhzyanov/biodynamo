@@ -1,4 +1,5 @@
 #include "cell.h"
+#include "displacement_op.h"
 #include "inline_vector.h"
 #include "neighbor_nanoflann_op.h"
 #include "neighbor_op.h"
@@ -14,39 +15,34 @@
 using std::ofstream;
 using bdm::Cell;
 using bdm::NeighborNanoflannOp;
+using bdm::DisplacementOp;
 using bdm::Scalar;
 
-template <typename T, typename Op>
-void RunTest(T* cells, const Op& op, char filename[100], int threads) {
+template <typename T, typename NOp, typename DOp>
+void RunTest(T* cells, const NOp& nop, const DOp& dop) {
   // execute and time neighbor operation
-  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-  op.Compute(cells, filename);
-  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-
-  if (print_terminal == 1) {
-    std::cout << "op.Compute           = "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count()
-              << "ms\n"
-              << "=============================================\n\n";
+  std::string threads;
+  if (std::getenv("OMP_NUM_THREADS")) {
+    threads = std::string(std::getenv("OMP_NUM_THREADS"));
+  } else {
+    std::cout << "You didn't set the number of threads with OMP_NUM_THREADS!" << std::endl;
+    exit(1);
   }
-
-  ofstream outfile;
-  outfile.open(filename, std::ofstream::out | std::ofstream::app);
-  outfile << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << ",";
-  outfile << threads << "\n";
-  outfile.close();
+  omp_set_num_threads(std::stoi(threads));
+  std::cout << cells->size() << "," << threads << ",";
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+  nop.Compute(cells);
+  dop.Compute(cells);
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
 }
 
 int main(int args, char** argv) {
-  if(args == 4) {
-    int threads;
-    std::istringstream(std::string(argv[2])) >> threads;
-    omp_set_num_threads(threads);
-
+  if(args == 2) {
     size_t cells_per_dim;
     std::istringstream(std::string(argv[1])) >> cells_per_dim;
 
-    srand((unsigned int) time(NULL));
+    srand(4357);
 
     auto cells = Cell<>::NewEmptySoa();
     cells.reserve(cells_per_dim * cells_per_dim * cells_per_dim);
@@ -65,20 +61,11 @@ int main(int args, char** argv) {
       }
     }
 
-    if (print_terminal == 1) {
-      std::cout << "Created grid of [" << (cells_per_dim*cells_per_dim*cells_per_dim) << "] cells\n" << std::endl;
-    }
-
-    const char* dirname = argv[3];
-    mkdir(dirname, 0700);
-
-    char neighbor_nf_file[100];
-    strcpy(neighbor_nf_file, dirname);
-    strcat(neighbor_nf_file, "/NanoflannOp.txt");
-
-    RunTest(&cells, NeighborNanoflannOp(900), neighbor_nf_file, threads);
+    std::cout << "- This line is to replace upstream initialization message -" << std::endl;
+    std::cout << "Number of simulation objects,Number of threads,Physics time" << std::endl;
+    RunTest(&cells, NeighborNanoflannOp(900), DisplacementOp());
   } else {
-    std::cout << "Error args: ./octree_bench <cells_per_dim> <num_treads> <dirname>" << std::endl;
+    std::cout << "Error args: ./octree_bench <cells_per_dim>" << std::endl;
   }
 
   return 0;
