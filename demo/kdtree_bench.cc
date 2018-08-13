@@ -3,8 +3,9 @@
 #include "inline_vector.h"
 #include "neighbor_nanoflann_op.h"
 #include "neighbor_op.h"
-#include "neighbor_pcl_op.h"
 #include "neighbor_unibn_op.h"
+
+#include "omp.h"
 
 #include <chrono>
 #include <fstream>
@@ -30,11 +31,14 @@ void RunTest(T* cells, const NOp& nop, const DOp& dop) {
   }
   omp_set_num_threads(std::stoi(threads));
   std::cout << cells->size() << "," << threads << ",";
+  for (int i =0; i< 10; i++) {
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   nop.Compute(cells);
   dop.Compute(cells);
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-  std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
+  std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " ";
+  }
+  std::cout << std::endl;
 }
 
 int main(int args, char** argv) {
@@ -61,8 +65,6 @@ int main(int args, char** argv) {
       }
     }
 
-    std::cout << "- This line is to replace upstream initialization message -" << std::endl;
-    std::cout << "Number of simulation objects,Number of threads,Physics time" << std::endl;
     RunTest(&cells, NeighborNanoflannOp(900), DisplacementOp());
   } else {
     std::cout << "Error args: ./octree_bench <cells_per_dim>" << std::endl;
