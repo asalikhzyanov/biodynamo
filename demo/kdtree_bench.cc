@@ -30,7 +30,7 @@ void RunTest(T* cells, const NOp& nop, const DOp& dop) {
     exit(1);
   }
   omp_set_num_threads(std::stoi(threads));
-  std::cout << cells->size() << "," << threads << ",";
+  std::cout << cells->size() << " " << threads << " ";
   for (int i =0; i< 10; i++) {
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   nop.Compute(cells);
