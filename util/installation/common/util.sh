@@ -227,10 +227,10 @@ function CallOSSpecificScript {
 
   # detect os
   local BDM_OS=$(DetectOs)
-  local BDM_INSTALL_OS_SRC=$BDM_INSTALL_SRC/$BDM_OS
+  local BDM_INSTALL_OS_SRC=$BDM_INSTALL_SRC/ubuntu-16.04
 
   # check if this system is supported
-  CheckOsSupported $BDM_INSTALL_SRC $BDM_OS
+#  CheckOsSupported $BDM_INSTALL_SRC $BDM_OS
 
   # check if script exists for the detected OS
   local BDM_SCRIPTPATH=$BDM_INSTALL_OS_SRC/$BDM_SCRIPT_FILE

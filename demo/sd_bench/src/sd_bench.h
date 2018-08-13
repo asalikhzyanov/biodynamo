@@ -34,7 +34,7 @@ inline int Simulate(int argc, const char** argv) {
   Simulation<> simulation(argc, argv);
 
   // 3. Define initial model - in this example: 3D grid of cells
-  size_t cells_per_dim = 128;
+  int cells_per_dim = std::stoi(argv[1]);
   auto construct = [](const std::array<double, 3>& position) {
     Cell cell(position);
     cell.SetDiameter(30);
@@ -45,7 +45,6 @@ inline int Simulate(int argc, const char** argv) {
   ModelInitializer::Grid3D(cells_per_dim, 20, construct);
 
   // 4. Run simulation for one timestep.
-  std::cout << "Number of simulation objects,Number of threads,Physics time" << std::endl;
   std::string threads;
   if (std::getenv("OMP_NUM_THREADS")) {
     threads = std::string(std::getenv("OMP_NUM_THREADS"));
@@ -55,10 +54,13 @@ inline int Simulate(int argc, const char** argv) {
   }
   std::cout << cells_per_dim * cells_per_dim * cells_per_dim << "," << threads << ",";
 
+  for (int t = 0 ; t < 10; t++) {
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
   simulation.GetScheduler()->Simulate(1);
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-  std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
+  std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " ";
+  }
+  std::cout << std::endl;
   return 0;
 }
 

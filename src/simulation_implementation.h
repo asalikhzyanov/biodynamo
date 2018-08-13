@@ -179,8 +179,8 @@ void Simulation<T>::InitializeRuntimeParams(int argc, const char** argv) {
   // Removing this line causes an unexplainable segfault due to setting the
   // gErrorIngoreLevel global parameter of ROOT. We need to log at least one
   // thing before setting that parameter.
-  Log::Info("", "Initialize new simulation using BioDynaMo ",
-            Version::String());
+//  Log::Info("", "Initialize new simulation using BioDynaMo ",
+  //          Version::String());
 
   // detect if the biodynamo environment has been sourced
   if (std::getenv("BDM_CMAKE_DIR") == nullptr) {

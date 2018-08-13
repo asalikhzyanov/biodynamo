@@ -116,15 +116,15 @@ function Install {
     InstallCmake $THIRD_PARTY_DIR
   fi
 
-  DownloadTarFromCBAndExtract $BDM_OS root.tar.gz $THIRD_PARTY_DIR/root
-  DownloadTarFromCBAndExtract $BDM_OS paraview.tar.gz $THIRD_PARTY_DIR/paraview
-  DownloadTarFromCBAndExtract $BDM_OS qt.tar.gz $THIRD_PARTY_DIR/qt
+#  DownloadTarFromCBAndExtract $BDM_OS root.tar.gz $THIRD_PARTY_DIR/root
+#  DownloadTarFromCBAndExtract $BDM_OS paraview.tar.gz $THIRD_PARTY_DIR/paraview
+#  DownloadTarFromCBAndExtract $BDM_OS qt.tar.gz $THIRD_PARTY_DIR/qt
 
   # temporal workaround to avoid libprotobuf error for paraview
   # use only until patched archive has been uploaded
-  rm $THIRD_PARTY_DIR/qt/plugins/platformthemes/libqgtk3.so
-  rm $THIRD_PARTY_DIR/qt/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake
-  touch $THIRD_PARTY_DIR/qt/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake
+#  rm $THIRD_PARTY_DIR/qt/plugins/platformthemes/libqgtk3.so
+#  rm $THIRD_PARTY_DIR/qt/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake
+#  touch $THIRD_PARTY_DIR/qt/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake
 
   EchoSuccess "Installation of prerequisites finished successfully!"
   EchoFinishThisStep $BDM_INSTALL_DIR
