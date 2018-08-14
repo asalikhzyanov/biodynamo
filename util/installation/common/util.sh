@@ -118,15 +118,15 @@ function DownloadTarAndExtract {
   fi
 }
 
-# Returns a CERNBox download link.
+# Returns a biodynamo lfs download link.
 # If the environment variable BDM_LOCAL_LFS is set to a local copy of LFS,
 # this function returns a local path to the requested file.
 # Arguments:
 #   $1 directory
 #   $2 file
-function CernboxLink {
+function BdmLfsLink {
   if [[ $# -ne 2 ]]; then
-    echo "ERROR in CernboxLink: Wrong number of arguments"
+    echo "ERROR in BdmLfsLink: Wrong number of arguments"
     exit 1
   fi
   if [ ! $BDM_LOCAL_LFS ]; then
@@ -152,7 +152,7 @@ function DownloadTarFromCBAndExtract {
   local FILE=$2
   local DEST=$3
 
-  URL=$(CernboxLink $DIR $FILE)
+  URL=$(BdmLfsLink $DIR $FILE)
 
   DownloadTarAndExtract $URL $DEST
 }
