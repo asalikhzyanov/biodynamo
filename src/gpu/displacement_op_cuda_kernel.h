@@ -12,9 +12,9 @@ struct SimParams {
   int32_t grid_dimensions[3];
   uint32_t num_boxes_axis[3];
   uint32_t box_length;
-  float timestep;
-  float squared_radius;
-  float max_displacement;
+  double timestep;
+  double squared_radius;
+  double max_displacement;
 };
 
 class DisplacementOpCudaKernel {
@@ -23,21 +23,21 @@ class DisplacementOpCudaKernel {
   virtual ~DisplacementOpCudaKernel();
 
   void LaunchDisplacementKernel(
-      float* positions, float* diameters, float* tractor_force,
-      float* adherence, uint32_t* box_id, float* mass,
+      double* positions, double* diameters, double* tractor_force,
+      double* adherence, uint32_t* box_id, double* mass,
       uint32_t* starts, uint16_t* lengths, uint32_t* successors,
-      float* cell_movements, SimParams host_params);
+      double* cell_movements, SimParams host_params);
 
   void ResizeCellBuffers(uint32_t num_cells);
   void ResizeGridBuffers(uint32_t num_boxes);
 
  private:
-  float* d_positions_ = NULL;
-  float* d_diameters_ = NULL;
-  float* d_mass_ = NULL;
-  float* d_cell_movements_ = NULL;
-  float* d_tractor_force_ = NULL;
-  float* d_adherence_ = NULL;
+  double* d_positions_ = NULL;
+  double* d_diameters_ = NULL;
+  double* d_mass_ = NULL;
+  double* d_cell_movements_ = NULL;
+  double* d_tractor_force_ = NULL;
+  double* d_adherence_ = NULL;
   uint32_t* d_box_id_ = NULL;
   uint32_t* d_starts_ = NULL;
   uint16_t* d_lengths_ = NULL;

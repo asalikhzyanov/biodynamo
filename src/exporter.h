@@ -197,7 +197,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     vtu << "      <Piece  NumberOfPoints=\"" << num_cells
         << "\" NumberOfCells=\"" << num_cells << "\">" << endl;
     vtu << "         <Points>" << endl;
-    vtu << "            <DataArray type=\"Float64\" NumberOfComponents=\"3\" "
+    vtu << "            <DataArray type=\"double64\" NumberOfComponents=\"3\" "
            "format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {
@@ -211,7 +211,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     vtu << "            </DataArray>" << endl;
     vtu << "         </Points>" << endl;
     vtu << "         <PointData>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"Cell_ID\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"Cell_ID\" "
            "NumberOfComponents=\"1\" format=\"ascii\">"
         << endl;
     index = 0;
@@ -220,7 +220,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     }
     vtu << endl;
     vtu << "            </DataArray>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"Adherence\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"Adherence\" "
            "NumberOfComponents=\"1\" format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {
@@ -231,7 +231,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     }
     vtu << endl;
     vtu << "            </DataArray>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"Diameter\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"Diameter\" "
            "NumberOfComponents=\"1\" format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {
@@ -242,7 +242,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     }
     vtu << endl;
     vtu << "            </DataArray>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"Mass\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"Mass\" "
            "NumberOfComponents=\"1\" format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {
@@ -253,7 +253,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     }
     vtu << endl;
     vtu << "            </DataArray>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"Volume\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"Volume\" "
            "NumberOfComponents=\"1\" format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {
@@ -264,7 +264,7 @@ class ParaviewExporter : public Exporter<TContainer> {
     }
     vtu << endl;
     vtu << "            </DataArray>" << endl;
-    vtu << "            <DataArray type=\"Float64\" Name=\"TractionForce\" "
+    vtu << "            <DataArray type=\"double64\" Name=\"TractionForce\" "
            "NumberOfComponents=\"3\" format=\"ascii\">"
         << endl;
     for (size_t i = 0; i < num_cells; i++) {

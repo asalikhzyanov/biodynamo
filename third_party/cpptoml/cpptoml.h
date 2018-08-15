@@ -273,7 +273,7 @@ class value;
 
 template <class T>
 struct valid_value
-    : is_one_of<T, std::string, int64_t, float, bool, local_date, local_time,
+    : is_one_of<T, std::string, int64_t, float, double, bool, local_date, local_time,
                 local_datetime, offset_datetime>
 {
 };

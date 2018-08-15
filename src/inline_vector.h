@@ -185,7 +185,7 @@ class InlineVector {
   // TODO(lukas) begin, end, emplace_back, ...
 
  private:
-  static constexpr float kGrowFactor = 1.5;
+  static constexpr double kGrowFactor = 1.5;
   std::array<T, N> data_;
   Int_t heap_size_ = 0;     // needed to help ROOT with array size
   T* heap_data_ = nullptr;  //[heap_size_]  // NOLINT

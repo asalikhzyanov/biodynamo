@@ -23,7 +23,7 @@ namespace bdm {
 ///     }
 ///
 ///     // code that wants to pass on a parameter pack to a class
-///     MyClass<VariadicTypedef<int, float>> class;
+///     MyClass<VariadicTypedef<int, double>> class;
 ///
 ///     // client code that receives a VariadicTypedef type and wants to create
 ///     // a tuple can do so by:

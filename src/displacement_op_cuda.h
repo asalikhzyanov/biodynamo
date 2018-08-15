@@ -23,8 +23,8 @@ class DisplacementOpCuda {
   void operator()(TContainer* cells, uint16_t type_idx) {
     auto& grid = TGrid::GetInstance();
 
-    std::vector<std::array<float, 3>> cell_movements(cells->size());
-    std::vector<float> mass(cells->size());
+    std::vector<std::array<double, 3>> cell_movements(cells->size());
+    std::vector<double> mass(cells->size());
     std::vector<uint32_t> starts;
     std::vector<uint16_t> lengths;
     std::vector<uint32_t> successors(cells->size());
@@ -32,7 +32,7 @@ class DisplacementOpCuda {
     uint32_t num_objects = cells->size();
     std::array<uint32_t, 3> num_boxes_axis;
     std::array<int32_t, 3> grid_dimensions;
-    float squared_radius =
+    double squared_radius =
         grid.GetLargestObjectSize() * grid.GetLargestObjectSize();
 
     // We need to create a mass vector, because it is not stored by default in

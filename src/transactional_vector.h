@@ -167,12 +167,12 @@ class TransactionalVector {
   const_iterator cend() { return data_.cbegin() += size_; }  // NOLINT
 
 #if defined(USE_CUDA) || defined(USE_OPENCL)
-float* GetPositionPtr() { return nullptr; }
-float* GetDiameterPtr() { return nullptr; }
-float* GetTractorForcePtr() { return nullptr; }
-float* GetAdherencePtr() { return nullptr; }
+double* GetPositionPtr() { return nullptr; }
+double* GetDiameterPtr() { return nullptr; }
+double* GetTractorForcePtr() { return nullptr; }
+double* GetAdherencePtr() { return nullptr; }
 uint32_t* GetBoxIdPtr() { return nullptr; }
-void FillMassVector(std::vector<float> * mass) {}
+void FillMassVector(std::vector<double> * mass) {}
 #endif
 
  private:

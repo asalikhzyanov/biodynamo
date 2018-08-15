@@ -6,10 +6,10 @@
 namespace bdm {
 
 template <typename TSO>
-void ApplyBoundingBox(TSO* sim_object, float lb, float rb) {
+void ApplyBoundingBox(TSO* sim_object, double lb, double rb) {
   // Need to create a small distance from the positive edge of each dimension;
   // otherwise it will fall out of the boundary of the simulation space
-  float eps = 1e-10;
+  double eps = 1e-10;
   auto pos = sim_object->GetPosition();
   for (int i = 0; i < 3; i++) {
     if (pos[i] < lb) {

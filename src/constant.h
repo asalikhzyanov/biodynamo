@@ -5,7 +5,7 @@ namespace bdm {
 
 struct Constant {
   /// Helpful constant to identify 'infinity'
-  static constexpr float kInfinity = 1e20;
+  static constexpr double kInfinity = 1e20;
 };
 
 }  // namespace bdm
