@@ -206,7 +206,7 @@ endif()
 # create cmake files used by external builds
 configure_file("cmake/UseBioDynaMo.cmake.in" "UseBioDynaMo.cmake" @ONLY)
 
-build_paraview_plugin()
+#build_paraview_plugin()
 
 # -------------------- build test project  ------------------------------------
 if (test)

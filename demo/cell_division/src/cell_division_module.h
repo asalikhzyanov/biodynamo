@@ -43,13 +43,13 @@ inline int Simulate(int argc, const char** argv) {
     cell.SetDiameter(30);
     cell.SetAdherence(0.4);
     cell.SetMass(1.0);
-    cell.AddBiologyModule(GrowDivide());
+    cell.AddBiologyModule(GrowDivide(25, 3000, {gAllBmEvents}));
     return cell;
   };
   ModelInitializer::Grid3D(cells_per_dim, 20, construct);
 
   // 4. Run simulation for one timestep
-  simulation.GetScheduler()->Simulate(1);
+  simulation.GetScheduler()->Simulate(100);
 
   std::cout << "Simulation completed successfully!\n";
   return 0;

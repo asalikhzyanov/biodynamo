@@ -159,7 +159,7 @@ BDM_SIM_OBJECT(Cell, bdm::SimulationObject) {
   uint32_t* GetBoxIdPtr() { return box_idx_.data(); }
 
   void FillMassVector(std::vector<double> * mass) {
-    for (size_t i = 0; i < diameter_.size(); i++) {
+    for (size_t i = 0; i < this->size(); i++) {
       (*mass)[i] = density_[i] * volume_[i];
     }
   }

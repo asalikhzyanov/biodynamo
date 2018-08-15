@@ -64,8 +64,8 @@ class DisplacementOpCuda {
     if (cdo_ == nullptr) {
       // Allocate 25% more memory so we don't need to reallocate GPU memory
       // for every (small) change
-      uint32_t new_num_objects = static_cast<uint32_t>(1.25 * num_objects);
-      uint32_t new_num_boxes = static_cast<uint32_t>(1.25 * starts.size());
+      uint32_t new_num_objects = static_cast<uint32_t>(overallocation_ * num_objects);
+      uint32_t new_num_boxes = static_cast<uint32_t>(overallocation_ * starts.size());
 
       // Store these extende buffer sizes for future reference
       num_objects_ = new_num_objects;
@@ -80,7 +80,7 @@ class DisplacementOpCuda {
                   "\nThe number of cells increased signficantly (from ",
                   num_objects_, " to ", num_objects,
                   "), so we allocate bigger GPU buffers\n");
-        uint32_t new_num_objects = static_cast<uint32_t>(1.25 * num_objects);
+        uint32_t new_num_objects = static_cast<uint32_t>(overallocation_ * num_objects);
         num_objects_ = new_num_objects;
         cdo_->ResizeCellBuffers(new_num_objects);
       }
@@ -90,7 +90,7 @@ class DisplacementOpCuda {
         Log::Info("DisplacementOpCuda",
                   "\nThe number of boxes increased signficantly (from ",
                   num_boxes_, " to ", "), so we allocate bigger GPU buffers\n");
-        uint32_t new_num_boxes = static_cast<uint32_t>(1.25 * starts.size());
+        uint32_t new_num_boxes = static_cast<uint32_t>(overallocation_ * starts.size());
         num_boxes_ = new_num_boxes;
         cdo_->ResizeGridBuffers(new_num_boxes);
       }
@@ -134,6 +134,7 @@ class DisplacementOpCuda {
   DisplacementOpCudaKernel* cdo_ = nullptr;
   uint32_t num_boxes_ = 0;
   uint32_t num_objects_ = 0;
+  uint32_t overallocation_ = 1.25;
 };
 
 }  // namespace bdm

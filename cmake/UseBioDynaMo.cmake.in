@@ -114,8 +114,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${BDM_CMAKE_DIR}")
 include("${BDM_CMAKE_DIR}/BioDynaMo.cmake")
 include(${ROOT_USE_FILE})
 
-set(BDM_REQUIRED_LIBRARIES ${BDM_REQUIRED_LIBRARIES} biodynamo ${ROOT_LIBRARIES} vtkPVPythonCatalyst
-    vtkIOParallelXML vtkPVVTKExtensionsDefault vtkPVServerManagerRendering)
+set(BDM_REQUIRED_LIBRARIES ${BDM_REQUIRED_LIBRARIES} biodynamo ${ROOT_LIBRARIES})
 
 include_directories("$ENV{BDM_CMAKE_DIR}/../../include")
 link_directories("$ENV{BDM_CMAKE_DIR}/../../lib")
